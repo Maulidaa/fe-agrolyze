@@ -1,8 +1,3 @@
-import {FiCamera} from "react-icons/fi";
-import {IoLocationOutline} from "react-icons/io5";
-import {LuCloudUpload} from "react-icons/lu";
-import {MdOutlineTimer} from "react-icons/md";
-
 export const features = [
   {
     imageUrl: "/images/kopi.png",
@@ -26,24 +21,24 @@ export const tutorials = [
     title: "Ambil Foto",
     description:
       "Foto bagian tanaman anda yang terkena penyakit dan pastikan foto tampak jelas.",
-    svg: <FiCamera color='#263C28' className='w-[30px] h-[30px]' />,
+    icon: "FiCamera",
   },
   {
     title: "Upload Foto",
     description: "Unggah foto yang telah diambil tadi ke website Agrolyze.",
-    svg: <LuCloudUpload color='#263C28' className='w-[30px] h-[30px]' />,
+    icon: "LuCloudUpload",
   },
   {
     title: "Tambahkan Lokasi",
     description:
       "Tambahkan lokasi tanaman anda agar kami dapat memberikan informasi yang lebih akurat.",
-    svg: <IoLocationOutline color='#263C28' className='w-[30px] h-[30px]' />,
+    icon: "IoLocationOutline",
   },
   {
     title: "Tunggu Hasil",
     description:
       "Tunggu beberapa saat hingga sistem kami memberikan hasil deteksi penyakit tanaman anda.",
-    svg: <MdOutlineTimer color='#263C28' className='w-[30px] h-[30px]' />,
+    icon: "MdOutlineTimer",
   },
 ];
 
