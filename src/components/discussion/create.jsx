@@ -5,6 +5,7 @@ import Image from "next/image";
 import {FiImage} from "react-icons/fi";
 import {API_DEV_URL} from "@/lib/config";
 import {getToken, getUserProfile} from "@/lib/auth";
+import {normalizeImageSrc} from "@/lib/utils";
 
 export default function CreateDiscussion({onNewDiscussion}) {
   const [imageUrl, setImage] = useState(null);
@@ -99,7 +100,7 @@ export default function CreateDiscussion({onNewDiscussion}) {
         {/* Foto Profil */}
         <div className='w-10 h-10 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full overflow-hidden'>
           <Image
-            src={user?.image || "/images/default-profile.jpg"}
+            src={normalizeImageSrc(user?.image, "/images/default-profile.jpg")}
             alt='Profile Picture'
             width={100}
             height={100}

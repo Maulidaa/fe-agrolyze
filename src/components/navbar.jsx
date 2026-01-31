@@ -25,6 +25,20 @@ export default function Navbar() {
   const [isClient, setIsClient] = useState(false);
   const token = getToken();
 
+  const getDisplayName = (value) => {
+    if (typeof value === "string" || typeof value === "number") return value;
+    if (value && typeof value === "object") {
+      return value.name || value.title || value.label || "";
+    }
+    return "";
+  };
+
+  const getImageSrc = (value) => {
+    if (typeof value === "string") return value;
+    if (value && typeof value === "object") return value.image || "";
+    return "";
+  };
+
   const isActive = (href) => pathname === href;
 
   const toggleDropdown = () => {
@@ -177,14 +191,14 @@ export default function Navbar() {
             >
               <div className='mx-auto flex items-center'>
                 <Image
-                  src={user?.image || "/images/icon_profil.svg"}
+                  src={getImageSrc(user?.image) || "/images/icon_profil.svg"}
                   alt='Profile'
                   width={30}
                   height={30}
                   className='rounded-full w-auto  object-cover'
                 />
                 <span className='ml-2 text-black'>
-                  {user?.name?.substring(0, 10)}
+                  {getDisplayName(user?.name).toString().substring(0, 10)}
                 </span>
                 <svg
                   className={`ml-2 w-4 h-4 transition-transform ${

@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import Image from "next/image";
 import {getToken, getUserProfile} from "@/lib/auth";
+import {normalizeImageSrc} from "@/lib/utils";
 import {API_DEV_URL} from "@/lib/config";
 
 export default function Profil() {
@@ -89,7 +90,7 @@ export default function Profil() {
       <div className='flex flex-col md:flex-row items-center gap-8 mb-4'>
         <div className='w-20 h-20 md:w-28 md:h-28 overflow-hidden'>
           <Image
-            src={user?.image ?? "/images/foto_profil.svg"}
+            src={normalizeImageSrc(user?.image, "/images/foto_profil.svg")}
             alt='Foto Profil'
             width={100}
             height={100}

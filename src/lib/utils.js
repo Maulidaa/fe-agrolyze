@@ -47,3 +47,9 @@ export function timeAgo(timestamp) {
   const differenceInYears = Math.floor(differenceInMonths / 12);
   return `${differenceInYears} tahun yang lalu`;
 }
+
+export function normalizeImageSrc(value, fallback = "") {
+  if (typeof value === "string") return value;
+  if (value && typeof value === "object") return value.image || fallback;
+  return fallback;
+}

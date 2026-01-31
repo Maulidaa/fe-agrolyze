@@ -3,7 +3,7 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import {FiHeart, FiMessageCircle, FiBookmark} from "react-icons/fi";
-import {timeAgo} from "@/lib/utils";
+import {normalizeImageSrc, timeAgo} from "@/lib/utils";
 import {PUBLIC_STORAGE_URL} from "@/lib/config";
 
 export default function CardContent({
@@ -24,7 +24,7 @@ export default function CardContent({
           {/* Foto Profil */}
           <div className='w-10 h-10 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full overflow-hidden'>
             <Image
-              src={user?.image}
+              src={normalizeImageSrc(user?.image, "/images/foto_profil.svg")}
               alt='Profile Picture'
               width={100}
               height={100}

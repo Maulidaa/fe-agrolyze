@@ -40,6 +40,13 @@ const nextConfig = {
         pathname: "/**",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "www.api-agrolens.maulidaa.my.id",
+        port: "",
+        pathname: "/**",
+        search: "",
+      },
     ],
   },
 };

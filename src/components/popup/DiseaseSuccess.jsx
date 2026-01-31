@@ -3,6 +3,31 @@ import React from "react";
 const DiseaseSuccessModal = ({isOpen, onClose, data, message}) => {
   if (!isOpen) return null;
 
+  const normalizeText = (value) => {
+    if (typeof value === "string" || typeof value === "number") return value;
+    if (value && typeof value === "object") {
+      return (
+        value.name ||
+        value.title ||
+        value.label ||
+        value.plant_name ||
+        value.disease ||
+        ""
+      );
+    }
+    return "";
+  };
+
+  const normalizeImage = (value) => {
+    if (typeof value === "string") return value;
+    if (value && typeof value === "object") return value.image || "";
+    return "";
+  };
+
+  const diseaseName = normalizeText(data?.disease);
+  const imageSrc = normalizeImage(data?.imageUrl);
+  const similarImageSrc = normalizeImage(data?.similar_images);
+
   return (
     <div
       className='h-screen overflow-auto p-2 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50'
@@ -23,7 +48,7 @@ const DiseaseSuccessModal = ({isOpen, onClose, data, message}) => {
             <h4 className='text-lg font-bold text-gray-800'>
               Penyakit Tanaman:
             </h4>
-            <p className='text-sm text-gray-600'>{data.disease}</p>
+            <p className='text-sm text-gray-600'>{diseaseName}</p>
 
             <h4 className='text-lg font-bold text-gray-800 mt-4'>
               Probabilitas:
@@ -37,22 +62,26 @@ const DiseaseSuccessModal = ({isOpen, onClose, data, message}) => {
                 <h4 className='text-lg font-bold text-gray-800'>
                   Gambar Tanaman:
                 </h4>
-                <img
-                  src={data.imageUrl}
-                  alt={data.disease}
-                  className='w-[200px] h-[150px] rounded-lg mt-2'
-                />
+                {imageSrc && (
+                  <img
+                    src={imageSrc}
+                    alt={diseaseName}
+                    className='w-[200px] h-[150px] rounded-lg mt-2'
+                  />
+                )}
               </div>
 
               <div className='mt-4'>
                 <h4 className='text-lg font-bold text-gray-800'>
                   Gambar Serupa:
                 </h4>
-                <img
-                  src={data.similar_images}
-                  alt='Gambar Serupa'
-                  className='w-[200px] h-[150px] rounded-lg mt-2'
-                />
+                {similarImageSrc && (
+                  <img
+                    src={similarImageSrc}
+                    alt='Gambar Serupa'
+                    className='w-[200px] h-[150px] rounded-lg mt-2'
+                  />
+                )}
               </div>
             </div>
 

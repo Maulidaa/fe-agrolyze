@@ -4,6 +4,32 @@ import React from "react";
 const IdentificationSuccessModal = ({isOpen, onClose, data, message}) => {
   if (!isOpen) return null;
 
+  const normalizeText = (value) => {
+    if (typeof value === "string" || typeof value === "number") return value;
+    if (value && typeof value === "object") {
+      return (
+        value.name ||
+        value.title ||
+        value.label ||
+        value.plant_name ||
+        value.disease ||
+        ""
+      );
+    }
+    return "";
+  };
+
+  const normalizeImage = (value) => {
+    if (typeof value === "string") return value;
+    if (value && typeof value === "object") return value.image || "";
+    return "";
+  };
+
+  const plantName = normalizeText(data?.plant_name);
+  const explanation = normalizeText(data?.explaination);
+  const imageSrc = normalizeImage(data?.image);
+  const similarImageSrc = normalizeImage(data?.similar_images);
+
   return (
     <div
       className='fixed p-2 h-auto overflow-auto inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50'
@@ -22,7 +48,7 @@ const IdentificationSuccessModal = ({isOpen, onClose, data, message}) => {
         {data && (
           <div className='mt-4'>
             <h4 className='text-lg font-bold text-gray-800'>Nama Tanaman:</h4>
-            <p className='text-sm text-gray-600'>{data.plant_name}</p>
+            <p className='text-sm text-gray-600'>{plantName}</p>
 
             <h4 className='text-lg font-bold text-gray-800 mt-4'>
               Probabilitas:
@@ -36,33 +62,37 @@ const IdentificationSuccessModal = ({isOpen, onClose, data, message}) => {
                 <h4 className='text-lg font-bold text-gray-800'>
                   Gambar Tanaman:
                 </h4>
-                <Image
-                  src={data.image}
-                  alt={data.plant_name}
-                  width={400}
-                  height={400}
-                  className='w-full h-[100px] md:h-[200px] object-cover rounded-lg mt-2'
-                />
+                {imageSrc && (
+                  <Image
+                    src={imageSrc}
+                    alt={plantName}
+                    width={400}
+                    height={400}
+                    className='w-full h-[100px] md:h-[200px] object-cover rounded-lg mt-2'
+                  />
+                )}
               </div>
 
               <div className='mt-4'>
                 <h4 className='text-lg font-bold text-gray-800'>
                   Gambar Serupa:
                 </h4>
-                <Image
-                  src={data.similar_images}
-                  alt='Gambar Serupa'
-                  width={400}
-                  height={400}
-                  className='w-full h-[100px] md:h-[200px] object-cover rounded-lg mt-2'
-                />
+                {similarImageSrc && (
+                  <Image
+                    src={similarImageSrc}
+                    alt='Gambar Serupa'
+                    width={400}
+                    height={400}
+                    className='w-full h-[100px] md:h-[200px] object-cover rounded-lg mt-2'
+                  />
+                )}
               </div>
             </div>
             <div className='grid'>
               <h4 className='text-lg font-bold text-gray-800 mt-4'>
                 Penjelasan:
               </h4>
-              <p className='text-sm text-gray-600'>{data.explaination}</p>
+              <p className='text-sm text-gray-600'>{explanation}</p>
             </div>
           </div>
         )}

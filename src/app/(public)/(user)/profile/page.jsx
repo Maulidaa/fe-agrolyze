@@ -3,7 +3,7 @@
 import CommentProfile from "@/components/profile/CommentProfile";
 import PostProfile from "@/components/profile/PostProfile";
 import {getToken, getUserProfile} from "@/lib/auth";
-import {simpleFormattedDate} from "@/lib/utils";
+import {normalizeImageSrc, simpleFormattedDate} from "@/lib/utils";
 import {useEffect, useState} from "react";
 import {API_DEV_URL, PUBLIC_STORAGE_URL} from "@/lib/config";
 import Image from "next/image";
@@ -64,7 +64,7 @@ export default function ProfilePage() {
       <div className='bg-black text-white p-6 flex items-center'>
         <div className='w-24 h-24 bg-gray-400 rounded-full flex-shrink-0'>
           <Image
-            src={user?.image ?? "/images/foto_profil.svg"}
+            src={normalizeImageSrc(user?.image, "/images/foto_profil.svg")}
             alt='Foto'
             width={100}
             height={100}

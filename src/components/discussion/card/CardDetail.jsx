@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import {IoSendOutline} from "react-icons/io5";
-import {timeAgo} from "@/lib/utils";
+import {normalizeImageSrc, timeAgo} from "@/lib/utils";
 import {getToken} from "@/lib/auth";
 import {API_DEV_URL, PUBLIC_STORAGE_URL} from "@/lib/config";
 import {MdKeyboardArrowLeft} from "react-icons/md";
@@ -88,7 +88,7 @@ export default function CardDetail({
       <div className='flex items-start gap-2 md:gap-4 mb-4'>
         <div className='w-10 h-10 rounded-full overflow-hidden'>
           <Image
-            src={user?.image || "/images/foto_profil.svg"}
+            src={normalizeImageSrc(user?.image, "/images/foto_profil.svg")}
             alt='Profile Picture'
             width={100}
             height={100}
@@ -134,7 +134,10 @@ export default function CardDetail({
             <div key={index} className='flex items-start gap-2 md:gap-4 mb-4'>
               <div className='w-10 h-10 rounded-full overflow-hidden'>
                 <Image
-                  src={commentItem.user?.image || "/images/foto_profil.svg"}
+                  src={normalizeImageSrc(
+                    commentItem.user?.image,
+                    "/images/foto_profil.svg"
+                  )}
                   alt='Profile Picture'
                   width={100}
                   height={100}

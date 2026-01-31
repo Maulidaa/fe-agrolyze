@@ -11,6 +11,32 @@ export default function ListBoxItem({
   explaination,
   treatment,
 }) {
+  const normalizeText = (value) => {
+    if (typeof value === "string" || typeof value === "number") return value;
+    if (value && typeof value === "object") {
+      return (
+        value.name ||
+        value.title ||
+        value.label ||
+        value.plant_name ||
+        value.disease ||
+        ""
+      );
+    }
+    return "";
+  };
+
+  const normalizeImage = (value) => {
+    if (typeof value === "string") return value;
+    if (value && typeof value === "object") return value.image || "";
+    return "";
+  };
+
+  const imageSrc = normalizeImage(image);
+  const similarImageSrc = normalizeImage(similar_image);
+  const displayName = normalizeText(name);
+  const displayExplanation = normalizeText(explaination);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -20,16 +46,18 @@ export default function ListBoxItem({
   return (
     <>
       <div className='flex flex-col sm:flex-row items-start sm:items-center bg-agro-light-gray rounded-lg p-4 shadow-sm mb-4'>
-        <Image
-          src={image}
-          alt={name}
-          width={100}
-          height={100}
-          className='object-cover rounded-md mb-4 sm:mb-0 sm:mr-4 w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20'
-        />
+        {imageSrc && (
+          <Image
+            src={imageSrc}
+            alt={displayName}
+            width={100}
+            height={100}
+            className='object-cover rounded-md mb-4 sm:mb-0 sm:mr-4 w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20'
+          />
+        )}
         <div className='flex-1'>
           <h3 className='text-base sm:text-lg lg:text-xl font-medium'>
-            {name}
+            {displayName}
           </h3>
           <p className='text-xs sm:text-sm lg:text-base text-gray-600'>
             {formattedDate(date)}
@@ -60,7 +88,7 @@ export default function ListBoxItem({
         <div className='h-screen overflow-auto p-2 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
           <div className='bg-white rounded-lg p-6 w-11/12 sm:w-3/4 lg:w-1/2'>
             <div className='flex justify-between items-center mb-4'>
-              <h2 className='text-lg sm:text-xl font-bold'>{name}</h2>
+              <h2 className='text-lg sm:text-xl font-bold'>{displayName}</h2>
               <button
                 onClick={toggleModal}
                 className='text-gray-500 hover:text-gray-700'
@@ -69,17 +97,19 @@ export default function ListBoxItem({
               </button>
             </div>
             <div className='grid grid-cols-2 gap-3'>
-              <Image
-                src={image}
-                alt={name}
-                width={400}
-                height={400}
-                className='h-[100px] md:h-[250px] object-cover rounded-md mb-4'
-              />
-              {similar_image && (
+              {imageSrc && (
                 <Image
-                  src={similar_image}
-                  alt={name}
+                  src={imageSrc}
+                  alt={displayName}
+                  width={400}
+                  height={400}
+                  className='h-[100px] md:h-[250px] object-cover rounded-md mb-4'
+                />
+              )}
+              {similarImageSrc && (
+                <Image
+                  src={similarImageSrc}
+                  alt={displayName}
                   width={400}
                   height={400}
                   className='h-[100px] md:h-[250px] object-cover rounded-md mb-4'
@@ -95,7 +125,7 @@ export default function ListBoxItem({
               </p>
             </div>
             <p className='text-sm sm:text-base text-gray-800'>
-              {explaination && explaination}
+              {displayExplanation}
             </p>
             {treatment && (
               <>
